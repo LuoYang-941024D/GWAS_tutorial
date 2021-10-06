@@ -1,0 +1,20 @@
+https://www.broadinstitute.org/videos/gwas-and-secondary-analyses-gwas-results
+
+1.为什么有时候QQ-plot会出现整体上漂的现象？
+可能是存在一些未被发现的系统误差，例如population structure，relatedness，technical bias，or poor quality genotype.
+2.Note : association is not causation!
+3.EIGENSOFT:可用于做genetics principle component analysis
+4.LocusZoom：放大局部SNP的信息
+
+
+Secondary analysis after GWAS
+1. Estimating the varience explained by sets of SNPs (GWAS significant SNPs, or deep list of SNPs)
+2. Fine-mapping : what are the independent or potential causal SNPs in the locus?
+3. Pleiotrophy :Does a SNP relate to multiple traits?
+4. Risk prediction : Does a score of genetic markers predict disease?
+5. Mendelian randomization : leveraging genetic markers to get at causality of biomarkers?
+6. Pathway analysis : Are the association loci linked biologically?
+  Software:
+ DEPICT: a data-driven, intergrative method that uses gene sets reconstituted on the basis of large-scale expression data to prioritize genes and gene sets and also indentify tissues enriched in highly expressed gene from associated loci and prioritize tissues and individual gene 
+ MEGENTA:Identify gene sets enriched in GWAS data
+ GRAIL: use the published data to highlight the connections between likely relevent genes within GWAS-indentified loci
