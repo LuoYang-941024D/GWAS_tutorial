@@ -1,0 +1,82 @@
+介绍
+GWAS发现snp和trait之间的关系。
+但是，snp的的影响非常小，而且也占变异的一小部分，因此很难用这些snp作为预测。
+有人用线性混合模型发现，当同时计算多个snps时，heritability能够被很好的计算出来。
+后来又出现了LDscore和PRS方法，用于计算变异的effects，去估计heritability，推断traits于预测表型之间的genetic overlap。
+
+LD score，genome wide complex traits analyses和PRS都能用来估计heritablity和不同复杂trait之间的公共etiology，到那时只有PRS能够计算genetic liability。
+经典PRLS方法通过计算risk alleles的总和，并且基于GWAS计算出的的effect size给予权重来进行。
+当我们不仅限于GWAS significant的snps,而是降低纳入标准的时候，将会有更好的predictor power。
+
+PRS应用：分析不同traits之间的shared etiology，分析全基因组的基因-环境，基因-基因相互作用，mendelian randomization，分层分析。
+
+Terminology：
+Classic PRS method：又叫C+T方法，是基于独立（clumped）SNP，并且超过一定P值threshold的snp。
+Risk allele:能够增加或者减少疾病风险的SNP。
+Effect size: 随着risk allele每增加一个copy，trait value的增量（beta值） 或者疾病风险的增量（OR）。(the increase in trait value or disease risk associated with each additional copy of the risk allele)
+Summary statistic:用一个数字总结多个数据点，例如均值或effect size。
+Base data:用于计算PRS的GWAS summary statistics。
+Target data：PLINK二进制格式的data，里面包含基因型-表型数据，每个个体的PRS都得到了计算。PRS推断出base trait的遗传易感性，并于target trait之间进行关联分析。
+Shrinkage：一种用于减少estimated effect size的统计学方法，overfitting可能会导致膨胀，因此这个方法能够更加精准的反应真实的人群effect size。
+SNP heritability: 指的是能够用SNP解释的表型差异的比例，通常只用GWAS数据中的common snp进行估计。
+Variance explained:通常指的是能够用一组predictors解释的表型差异。
+
+PRS介绍：
+PRS是一个数值，表示的是是一个个体对一种表型的genetic liability，通过计算全基因组基因型的总和，在通过由GWAS分析得到的effect size赋予权重。
+上面提到的基因型通常指的是常见（MAF>0.01）的双等位基因的SNP,但有时候也可纳入rare变异或者其他多态性。
+Effect size estimate能够被成比例的缩放。
+因为PRS是基于summary statistc data来计算effect size，这与仅探索个人水平的表型预测方法不同。
+在后者中，基因型effect size通常在多个变量的联合模型中估计，预测也同时进行。常见的方法有best linear unbiased prediction or least absolut chrinkeage and selection operator (LASSO).
+
+PRS的优势：
+1. 数据分享限制不易于获得个人数据
+2. 减少队列中人群异质性的问题
+3. 很多大数据集，例如ukbiobank，缺乏有非常明确疾病类型的个体，通常只有summary statistic data
+4. 研究人员希望通过在表型丰富的小样本数据集中验证假说，使得利用powerful summary statistic data变的可行。
+
+计算PRS的impute data：
+1 Base data（GWAS），全基因组的基因-表型相关性的summary statistc（例如：beta和p值）。通常在网上都能找到。
+2 Target data：通常包括个体的基因型和表型，一般只有研究人员有权限进入，不公开，并且独立于GWAS样本。PLILNK 格式。
+（PRS是在target sample中进行的。target sample仅用于计算所有target individual的PRS，计算PRS和表型之间的相关性，计算PRS和预测疾病风险之间的相关性，计算PRS和药物副作用之间的相关性）
+
+计算PRS的challenge
+1 应该纳入哪些SNP？
+2 如果需要的话，应该采用什么样的shrinkage？
+
+如果PRS计算的参数没有在之前得到优化，那么就应该用target sample同时进行优化和分析，需要涉及cross validation和permutation。
+heritabilitytyct
+
+如果genetic effect能够通过GWAS毫无误差的计算出来，那么PRS能够解释的表型差异应该等于SNP heritability （h2 SNP）.
+但是，由于在effect size估计中的误差，以及base sample和target sample中的差异，PRS的预测power远远低于SNP heritability，但是随着GWAS样本量的增大，会逐渐趋向于h2 SNP。
+
+计算PRS步骤
+1.QC 之 base data （用于获得Beta值 or OR权重的数据集）
+1.1 Heritability check : 只选用h2 SNP>0.05 的snp。
+如果Summary statistics中没有报道heritability，那么推荐采用LD socre regression 或者 SumHer从summary statistics中进行估计。
+1.2 Effect allele：一定要明确effect allele，不然计算出来的PRS可能就是反的。
+
+2. QC 之 target data （用于apply PRS的数据集）
+推荐target data的样本量应该大于100个。样本量过小可能会导致人群结构矫正，LD计算不够准确，PRS-trait相关性检测的power不足。
+
+3. QC 之 同时 base data 和 target data
+3.1 确保文件传输的时候没有损坏
+3.2 确保base data 和target data中的SNP信息都是基于同一个genome build。如果不是，可以用LiftOver来让不同数据的SNP信息标准化。
+3.3 标准的GWAS QC
+推荐
+3.3 标准GWAS QC
+3.3 标准GWAS QC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
