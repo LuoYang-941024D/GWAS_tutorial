@@ -1,0 +1,6 @@
+plink --bfile /home/yang/projects/8_Neutrophil_respiratory_disorder/data/COPSACsevere/anders/Merged_HLA_Imputed \
+--covar  /home/yang/projects/8_Neutrophil_respiratory_disorder/data/COPSACsevere/anders/covariates.txt \
+--pheno /home/yang/projects/8_Neutrophil_respiratory_disorder/data/COPSACsevere/anders/hosp6+.txt \
+--logistic \
+--hide-covar \
+--out /home/yang/projects/8_Neutrophil_respiratory_disorder/result/COPSACsevere/anders/gwas/hosp6+
